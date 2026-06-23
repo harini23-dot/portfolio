@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Harini S | AI & Prompt Engineering</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;
+    --accent:#7c6ff7;--accent2:#a78bfa;--teal:#2dd4bf;
+    --text:#e8e6f0;--muted:#8b89a0;--border:#2a2840;--card:#15151f;
+  }
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;}
+  a{color:var(--accent2);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  nav{
+    position:fixed;top:0;width:100%;background:rgba(10,10,15,0.85);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+    padding:0 2rem;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;height:60px;
+  }
+  .nav-logo{font-family:'Fira Code',monospace;font-size:15px;color:var(--accent2);}
+  .nav-links{display:flex;gap:1.5rem;}
+  .nav-links a{color:var(--muted);font-size:14px;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--text);text-decoration:none;}
+
+  section{padding:5rem 0;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+
+  /* Hero */
+  #hero{min-height:100vh;display:flex;align-items:center;padding-top:60px;}
+  .hero-label{font-family:'Fira Code',monospace;font-size:13px;color:var(--teal);margin-bottom:1.2rem;letter-spacing:0.05em;}
+  .hero-name{font-size:clamp(2.5rem,6vw,4rem);font-weight:600;line-height:1.1;margin-bottom:0.5rem;}
+  .hero-name span{color:var(--accent2);}
+  .hero-title{font-size:clamp(1rem,2.5vw,1.3rem);color:var(--muted);margin-bottom:1.5rem;font-weight:400;}
+  .hero-desc{max-width:560px;color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:2.5rem;}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn-primary{background:var(--accent);color:#fff;padding:0.7rem 1.5rem;border-radius:8px;font-size:14px;font-weight:500;transition:background 0.2s;}
+  .btn-primary:hover{background:var(--accent2);text-decoration:none;color:#fff;}
+  .btn-outline{border:1px solid var(--border);color:var(--text);padding:0.7rem 1.5rem;border-radius:8px;font-size:14px;font-weight:500;transition:border-color 0.2s;}
+  .btn-outline:hover{border-color:var(--accent);text-decoration:none;}
+  .hero-tags{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:2rem;}
+  .tag{background:var(--bg3);border:1px solid var(--border);padding:0.3rem 0.8rem;border-radius:20px;font-size:12px;font-family:'Fira Code',monospace;color:var(--accent2);}
+
+  /* Section title */
+  .section-header{margin-bottom:3rem;}
+  .section-label{font-family:'Fira Code',monospace;font-size:12px;color:var(--teal);letter-spacing:0.1em;margin-bottom:0.5rem;}
+  .section-title{font-size:1.8rem;font-weight:600;}
+
+  /* About */
+  #about .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+  .about-text p{color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:1rem;}
+  .about-text p strong{color:var(--text);}
+  .info-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+  .info-card h4{font-size:12px;color:var(--teal);font-family:'Fira Code',monospace;letter-spacing:0.05em;margin-bottom:1rem;}
+  .info-item{display:flex;align-items:flex-start;gap:0.75rem;padding:0.75rem;background:var(--bg3);border-radius:8px;margin-bottom:0.5rem;}
+  .info-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+  .info-name{font-size:13px;font-weight:500;line-height:1.4;}
+  .info-org{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  /* Skills */
+  #skills .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;}
+  .skill-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+  .skill-card-title{font-size:12px;color:var(--teal);font-weight:500;letter-spacing:0.05em;margin-bottom:1rem;font-family:'Fira Code',monospace;}
+  .skill-pills{display:flex;flex-wrap:wrap;gap:0.4rem;}
+  .skill-pill{background:var(--bg3);border:1px solid var(--border);padding:0.25rem 0.65rem;border-radius:6px;font-size:12px;color:var(--text);}
+  .skill-pill.highlight{border-color:var(--accent);color:var(--accent2);}
+
+  /* Projects */
+  #projects .projects-grid{display:grid;gap:1.25rem;}
+  .project-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s;}
+  .project-card:hover{border-color:var(--accent);}
+  .project-card.featured{border-color:var(--accent);position:relative;overflow:hidden;}
+  .project-card.featured::before{content:'featured';position:absolute;top:1rem;right:1rem;background:var(--accent);color:#fff;font-size:10px;padding:0.2rem 0.6rem;border-radius:20px;font-weight:500;letter-spacing:0.05em;}
+  .project-header{display:flex;align-items:start;gap:1rem;margin-bottom:0.75rem;}
+  .project-icon{width:40px;height:40px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .project-name{font-size:16px;font-weight:500;margin-bottom:0.2rem;}
+  .project-status{font-size:11px;color:var(--teal);}
+  .project-desc{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:1rem;}
+  .project-tech{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;}
+  .tech-tag{background:var(--bg3);border:1px solid var(--border);padding:0.2rem 0.6rem;border-radius:5px;font-size:11px;font-family:'Fira Code',monospace;color:var(--accent2);}
+  .project-links{display:flex;gap:1rem;}
+  .project-link{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:0.3rem;transition:color 0.2s;}
+  .project-link:hover{color:var(--accent2);text-decoration:none;}
+
+  /* Education */
+  #education .edu-grid{display:grid;gap:1rem;}
+  .edu-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;justify-content:space-between;align-items:start;gap:1rem;}
+  .edu-left{}
+  .edu-degree{font-size:15px;font-weight:500;margin-bottom:0.2rem;}
+  .edu-school{font-size:13px;color:var(--muted);margin-bottom:0.3rem;}
+  .edu-score{font-size:12px;color:var(--teal);font-family:'Fira Code',monospace;}
+  .edu-year{font-size:12px;color:var(--muted);white-space:nowrap;font-family:'Fira Code',monospace;}
+
+  /* Certifications */
+  #certifications .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+  .cert-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;gap:0.75rem;align-items:flex-start;transition:border-color 0.2s;}
+  .cert-card:hover{border-color:var(--accent);}
+  .cert-emoji{font-size:22px;flex-shrink:0;}
+  .cert-name{font-size:13px;font-weight:500;line-height:1.4;margin-bottom:0.2rem;}
+  .cert-org{font-size:11px;color:var(--muted);}
+
+  /* Contact */
+  #contact{border-top:1px solid var(--border);}
+  .contact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;}
+  .contact-card h3{font-size:1.5rem;font-weight:600;margin-bottom:0.75rem;}
+  .contact-card p{color:var(--muted);font-size:15px;margin-bottom:2rem;}
+  .contact-links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+  .contact-link{display:flex;align-items:center;gap:0.5rem;background:var(--bg3);border:1px solid var(--border);padding:0.65rem 1.25rem;border-radius:8px;font-size:14px;color:var(--text);transition:border-color 0.2s;}
+  .contact-link:hover{border-color:var(--accent);text-decoration:none;color:var(--text);}
+
+  footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;color:var(--muted);font-size:13px;font-family:'Fira Code',monospace;}
+
+  @media(max-width:640px){
+    #about .about-grid{grid-template-columns:1fr;}
+    .hero-btns{flex-direction:column;}
+    nav{padding:0 1rem;}
+    .nav-links{gap:1rem;}
+    .edu-card{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">harini.s</div>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#education">education</a>
+    <a href="#certifications">certs</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="container">
+    <div class="hero-label">👋 hello, I'm</div>
+    <h1 class="hero-name">Harini <span>S</span></h1>
+    <p class="hero-title">Prompt Engineer · AI Developer · Java Developer</p>
+    <p class="hero-desc">
+      MCA student at VIT Vellore passionate about building intelligent AI-powered solutions.
+      Specializing in Generative AI, RAG pipelines, and LLM prompt engineering.
+      AWS Certified Cloud Practitioner.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="https://github.com/harini23-dot" target="_blank" class="btn-outline">GitHub Profile</a>
+    </div>
+    <div class="hero-tags">
+      <span class="tag">RAG Pipelines</span>
+      <span class="tag">LLMs</span>
+      <span class="tag">Prompt Engineering</span>
+      <span class="tag">Python</span>
+      <span class="tag">Java</span>
+      <span class="tag">AWS ☁️</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// about me</div>
+      <h2 class="section-title">Who I Am</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a final-year <strong>MCA student at Vellore Institute of Technology</strong>, passionate about the intersection of AI and real-world problem solving.</p>
+        <p>I work extensively with <strong>Generative AI frameworks</strong> including BERT, DistilBERT, and RAG pipelines. Proficient in prompt engineering techniques like zero-shot, few-shot, chain-of-thought, and role-based prompting.</p>
+        <p>I actively use <strong>Claude, ChatGPT, Gemini, and GitHub Copilot</strong> to build AI-powered solutions and automate workflows. I also have a strong foundation in <strong>Java</strong> with hands-on experience building full-scale applications.</p>
+        <p>Languages: <strong>Tamil, English</strong></p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="info-card">
+          <h4>// education highlights</h4>
+          <div class="info-item">
+            <div class="info-icon">🎓</div>
+            <div>
+              <div class="info-name">MCA — VIT Vellore</div>
+              <div class="info-org">2025–2027 · CGPA: 7.94</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">🎓</div>
+            <div>
+              <div class="info-name">BCA — VIT Vellore</div>
+              <div class="info-org">2022–2025 · CGPA: 8.16</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-card">
+          <h4>// top certification</h4>
+          <div class="info-item">
+            <div class="info-icon">☁️</div>
+            <div>
+              <div class="info-name">AWS Certified Cloud Practitioner</div>
+              <div class="info-org">Amazon Web Services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// technical skills</div>
+      <h2 class="section-title">What I Work With</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">Prompt Engineering</div>
+        <div class="skill-pills">
+          <span class="skill-pill highlight">Zero-shot</span>
+          <span class="skill-pill highlight">Few-shot</span>
+          <span class="skill-pill highlight">Chain-of-Thought</span>
+          <span class="skill-pill highlight">Role-based</span>
+          <span class="skill-pill highlight">Structured Output</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Generative AI & NLP</div>
+        <div class="skill-pills">
+          <span class="skill-pill highlight">RAG Pipelines</span>
+          <span class="skill-pill highlight">FAISS</span>
+          <span class="skill-pill highlight">LangChain</span>
+          <span class="skill-pill highlight">BERT</span>
+          <span class="skill-pill highlight">DistilBERT</span>
+          <span class="skill-pill highlight">AI Agents</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">AI Tools</div>
+        <div class="skill-pills">
+          <span class="skill-pill highlight">Claude</span>
+          <span class="skill-pill highlight">ChatGPT</span>
+          <span class="skill-pill highlight">Gemini</span>
+          <span class="skill-pill highlight">GitHub Copilot</span>
+          <span class="skill-pill highlight">Cursor</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Programming</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">ML / Deep Learning</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">CNN</span>
+          <span class="skill-pill">DenseNet</span>
+          <span class="skill-pill">NCF</span>
+          <span class="skill-pill">Time-Aware GRU</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Cloud & Backend</div>
+        <div class="skill-pills">
+          <span class="skill-pill highlight">AWS ☁️</span>
+          <span class="skill-pill">FastAPI</span>
+          <span class="skill-pill">REST APIs</span>
+          <span class="skill-pill">JSON</span>
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">MongoDB</span>
+          <span class="skill-pill">GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// projects</div>
+      <h2 class="section-title">What I've Built</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card featured">
+        <div class="project-header">
+          <div class="project-icon">📰</div>
+          <div>
+            <div class="project-name">Hybrid News Recommendation System</div>
+            <div class="project-status">🔄 Conference Project — In Progress</div>
+          </div>
+        </div>
+        <p class="project-desc">
+          A personalized news recommendation system integrating FAISS-based RAG retrieval and Intent-Adaptive Re-ranking. Uses BERT for news content encoding, Neural Collaborative Filtering for user-item interaction modeling, and a Time-Aware GRU with Attention Mechanism to capture sequential user behavior. Built real-time inference pipeline using FastAPI for REST API-based recommendation delivery.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">RAG</span>
+          <span class="tech-tag">FAISS</span>
+          <span class="tech-tag">BERT</span>
+          <span class="tech-tag">DistilBERT</span>
+          <span class="tech-tag">FastAPI</span>
+          <span class="tech-tag">NCF</span>
+          <span class="tech-tag">Time-Aware GRU</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/harini23-dot/NEWS_RECOMMENDATION_SYSTEM" target="_blank" class="project-link">↗ View on GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🔬</div>
+          <div>
+            <div class="project-name">Skin Disease Classification Using Deep Learning</div>
+            <div class="project-status">✅ Completed · 96.83% Accuracy</div>
+          </div>
+        </div>
+        <p class="project-desc">
+          Developed a hybrid CNN + DenseNet deep learning model using Transfer Learning, achieving 96.83% accuracy on a dermatology dataset from Kaggle. Built a real-time web interface with a FastAPI backend for live image upload and disease prediction via REST API. Leveraged GitHub Copilot and Claude for AI-assisted development and workflow automation.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">CNN</span>
+          <span class="tech-tag">DenseNet</span>
+          <span class="tech-tag">Transfer Learning</span>
+          <span class="tech-tag">FastAPI</span>
+          <span class="tech-tag">GitHub Copilot</span>
+          <span class="tech-tag">Claude</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" class="project-link">↗ View on GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">✈️</div>
+          <div>
+            <div class="project-name">Airline Management System</div>
+            <div class="project-status">✅ Completed</div>
+          </div>
+        </div>
+        <p class="project-desc">
+          A full-featured Java console application supporting ticket booking, cancellation, passenger management, seat assignment, fare classes, and revenue reporting. Implemented JDBC connectivity with MySQL for structured data storage and transaction handling. Used GitHub Copilot and ChatGPT for prompt-assisted code generation and debugging.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Java</span>
+          <span class="tech-tag">JDBC</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">OOP</span>
+          <span class="tech-tag">DAO Pattern</span>
+          <span class="tech-tag">GitHub Copilot</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/harini23-dot/AirlineManagementSystem" target="_blank" class="project-link">↗ View on GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// education</div>
+      <h2 class="section-title">Academic Background</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-left">
+          <div class="edu-degree">Master of Computer Applications (MCA)</div>
+          <div class="edu-school">Vellore Institute of Technology</div>
+          <div class="edu-score">CGPA: 7.94 · Pursuing</div>
+        </div>
+        <div class="edu-year">2025 – 2027</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-left">
+          <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+          <div class="edu-school">Vellore Institute of Technology</div>
+          <div class="edu-score">CGPA: 8.16</div>
+        </div>
+        <div class="edu-year">2022 – 2025</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-left">
+          <div class="edu-degree">Class XII (HSC)</div>
+          <div class="edu-school">Rathinagiri Bageerathan Matriculation Higher Secondary School</div>
+          <div class="edu-score">Percentage: 80%</div>
+        </div>
+        <div class="edu-year">2021 – 2022</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-left">
+          <div class="edu-degree">Class X (SSLC)</div>
+          <div class="edu-school">Rathinagiri Bageerathan Matriculation Higher Secondary School</div>
+          <div class="edu-score">Percentage: 79.6%</div>
+        </div>
+        <div class="edu-year">2019 – 2020</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// certifications</div>
+      <h2 class="section-title">Credentials</h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-emoji">☁️</div>
+        <div>
+          <div class="cert-name">AWS Certified Cloud Practitioner</div>
+          <div class="cert-org">Amazon Web Services</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-emoji">🗄️</div>
+        <div>
+          <div class="cert-name">Database and SQL for Data Science with Python</div>
+          <div class="cert-org">IBM · Coursera</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-emoji">🐍</div>
+        <div>
+          <div class="cert-name">Python for Data Science, AI & Development</div>
+          <div class="cert-org">IBM · Coursera</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-emoji">🌐</div>
+        <div>
+          <div class="cert-name">Web Development with HTML, CSS, JavaScript</div>
+          <div class="cert-org">IBM · Coursera</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-emoji">📊</div>
+        <div>
+          <div class="cert-name">Data Science and Hadoop</div>
+          <div class="cert-org">VIT Value Added Course</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-card">
+      <h3>Let's Connect</h3>
+      <p>Open to internship opportunities in AI, Prompt Engineering, and Java Development.</p>
+      <div class="contact-links">
+        <a href="mailto:harini0810305@gmail.com" class="contact-link">📧 YOUR_EMAIL@gmail.com</a>
+        <a href="https://github.com/harini23-dot" target="_blank" class="contact-link">🐙 GitHub</a>
+        <a href="https://linkedin.com/in/harini-s23" target="_blank" class="contact-link">💼 LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  built with ♥ by harini s · 2025
+</footer>
+
+</body>
+</html>
